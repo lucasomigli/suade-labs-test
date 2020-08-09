@@ -31,7 +31,7 @@ def testTypes(testCase):
     for instrument in testCase['instruments']:
         assert type(instrument) == Instrument
         assert type(instrument.getAdjustedNotional()) == np.float64
-        assert type(instrument.getDelta()) == float
+        assert type(instrument.delta) == float
         assert type(instrument.getBucketSet()) == int
         assert type(instrument.getEffectiveNotional()) == np.float64
 
@@ -42,6 +42,12 @@ def testTypes(testCase):
     assert type(testCase['process'].getReplacementCost()) == float
     assert type(testCase['process'].getAddOn()) == np.float64
     assert type(testCase['process'].getEAD()) == np.float64
+
+
+def test_getDelta(testCase):
+    for instrument in testCase['instruments']:
+        instrument.getAdjustedNotional()
+        assert np.sign(instrument.isCall) == np.sign(instrument.delta)
 
 
 def test_calcNotionalAmount(testCase):

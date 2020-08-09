@@ -27,6 +27,11 @@ class Instrument:
         self.payment_type = data['payment_type']
         self.receive_type = data['receive_type']
 
+        self.floatingRate = .06         # using 6% for the floating rate as an example
+        self.fixedRate = .05            # using 5% for the fixed rate as an example
+        self.sigma = 0.5                # volatility for interest rate swaps and swaptions is 50%
+        self.isCall = 0                 # initialised to zero. Returns 1 if contract is a call and -1 if contract is a put
+
         self.maturity = (self.end_date - self.start_date).days / 365
         self.timeBucket = self.getBucketSet()
         self.MF = 1
@@ -40,18 +45,26 @@ class Instrument:
 
     # Evaluates delta for the security. This is following the formula written in the SC-CCR handbook.
     def getDelta(self):
+
+        payLegRate = 0.0
+        receiveLegRate = 0.0
+
+        if self.payment_type == 'floating':
+            payLegRate = self.floatingRate
+            receiveLegRate = self.fixedRate
+        else:
+            payLegRate = self.fixedRate
+            receiveLegRate = self.floatingRate
+
+        self.isCall = 1.0 if receiveLegRate > payLegRate else -1.0
+
         if self.type == 'vanilla_swap':
-            if self.mtm_dirty >= 0.0:
-                return 1.0
-            else:
-                return -1.0
+            return self.isCall
         else:
             phi = (1 + np.sqrt(5)) / 2
-            sigma = 0.5                         # 5% is the volatility for supervisory options for interest rates
-            spot = 0.5                          # need to adjust to real rate, not provided in the example file (?)
-            strike = 0.6                        # aneed to djust to real rate, not provided in the example file (?)
             contractual_date = self.maturity
-            return float(np.sign(self.mtm_dirty) * phi * (np.log(spot/strike) + 0.5 * sigma**2 * contractual_date) / sigma * contractual_date**0.5)
+
+            return float(self.isCall * phi * (np.log(payLegRate/receiveLegRate) + 0.5 * self.sigma**2 * contractual_date) / (self.sigma * contractual_date**0.5))
 
     # Evaluates the type of time bucket for the specific swap based on the maturity
     # (less than one year, between 1 and 5 years, greater than 5)
@@ -142,7 +155,7 @@ def main():
     # Using terminaltables for drwawing tables.
     INSTRUMENTS_TABLE = [['Instrument', 'Type', 'Maturity (years)', 'Notional', 'Pay Leg', 'Receive Leg', 'Market Value', 'Adjusted Notional', 'Delta']]
     INSTRUMENTS_TABLE.extend([[i.id, i.type, i.maturity, i.notional_amount, i.payment_type,
-                               i.receive_type, i.mtm_dirty, i.getAdjustedNotional(), i.getDelta()]for i in instruments])
+                               i.receive_type, i.mtm_dirty, i.getAdjustedNotional(), i.delta]for i in instruments])
 
     SA_CCR_TABLE = [['Replacement Cost', 'Effective Notionals', 'AddOn', 'EAD'],
                     [process.getReplacementCost(), "Set1: %f; Set2: %f" % tuple(process.effectiveNotionals), process.getAddOn(), process.ead]]
