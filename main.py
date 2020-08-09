@@ -102,7 +102,7 @@ class SA_CCR:
             _set = [instrument.getEffectiveNotional() for instrument in self.hedging_sets[currency]]
             self.effectiveNotionals.append(self.calcNotionalAmount(_set))
 
-    # Calculating notionalAmount for every hedging_set (grouped by currency) in hedging_sets
+    # Calculating notionalAmount for each set (grouped by currency) in hedging_sets
     def calcNotionalAmount(self, lis):
         a = lis[0]
         b = 0.0 if len(lis) < 2 else lis[1]
