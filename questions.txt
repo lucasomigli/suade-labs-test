@@ -1,0 +1,28 @@
+Question 1: In 200 words or less, explain what you think the Basel Committee is trying to achieve with this regulation, 
+pros/cons of this approach and what (if any) is the alternative? 
+
+The Basel Committee has been created after the needs of 2008 crysis in order to implement an internationally
+recognised regulatory system to prevent and reduce counterparty credit default risk in the banking world.
+With the latest implementations and SA-CCR, an intervention has been made in order to simplify even more regulations,
+communication and transparency between financial institutions. The SS-CCR standardised approach will reorganise the 
+system and overwrite the older CEM, SM and IMM SM. Most importantly, the benefits of such system are the differences
+between margined and unmargined transactions together with the recognition of netting benefits which was not accurately
+defined in the previous models. Finally, the SM model did not provide banks with an identified, reliable method for calculating
+Exposure at Default (EAD), as it used different internal methods for calculating deltas.
+On the other hand, the SA-CCR uses two components being RC (replacement cost) and the PFE (potential future exposure). The PFE
+in particular will incorporate the calculation of a multiplier that generalises both the partial recognition of excess counterparty 
+collateral and the Add-On, which essentially takes into account correlation and differentiation between  different asset classes
+grouped accordingly in hedging sets.
+The negative effects of such resolution are that the implementation does not take into account the difficulties of utilising such
+an intricate and complex classification system that banks and regulatory institutions will have to manage. The transmission and use 
+of data under the SA-CCR requires a solid, workable technical solution that is shared equally among financial institutions.
+
+Question 2: In 100 words or less, explain, as you would to your grandmother, what the Add-On is for?
+
+As a premise, we said that the new SA-CCR helps differentiate more adequately between margined and unmargined transactions.
+The Add-On factor was something that was used in the previous Basel (CEM) models. In the newest regulation, the Add-On factor has been 
+implemented to the new EAD formula in a much more conservative way for evaluating exposure during stress cases. That is done firstly  
+by calculatin the Add-On specifically to single asset classes, then by adding the amounts together and weighting according to the formula.
+In simpler words, the Add-On is an added calculation that takes into account extreme economic cases where financial institutions 
+require funds in order to prevent a collapse. It essentially answers the question, how much is required in the case of another 2008 crysis?
+How much risk is "added" with these asset classes if another economic collapse happens?
